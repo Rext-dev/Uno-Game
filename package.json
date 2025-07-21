@@ -1,0 +1,32 @@
+{
+  "name": "capstone",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --watch src/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.13.1",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/enriquehernandez_programacion4/capstone.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/enriquehernandez_programacion4/capstone/issues"
+  },
+  "homepage": "https://gitlab.com/enriquehernandez_programacion4/capstone#readme",
+  "description": "",
+  "dependencies": {
+    "dotenv": "17.2.0",
+    "express": "5.1.0",
+    "mysql2": "^3.14.2",
+    "sequelize": "6.37.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.31.0"
+  }
+}
