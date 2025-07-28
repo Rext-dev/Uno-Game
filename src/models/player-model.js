@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database-config.js";
 
-const Game = sequelize.define("Game", {
+const Player = sequelize.define("Player", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -10,19 +10,27 @@ const Game = sequelize.define("Game", {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
+    validate: {
+      notEmpty: true,
+      len: [1, 100],
+    },
   },
-  description: {
-    type: DataTypes.TEXT,
+  age: {
+    type: DataTypes.INTEGER,
     allowNull: false,
+    validate: {
+      min: 0,
+    },
   },
-  genre: {
+  email: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
+    validate: {
+      isEmail: true,
+      notEmpty: true,
+    },
   },
-  platform: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+  
 });
-
-export default Game;
+export default Player;
