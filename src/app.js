@@ -1,12 +1,12 @@
 import express from "express";
 import { createServer } from "http";
 import { connectDB, sequelize } from "./config/database-config.js";
-import errorHandler from "./middleware/error-handler.js";
-import gameRoutes from "./routes/game-route.js";
+import errorHandler from "./middlewares/error-handler.js";
 import playerRoutes from "./routes/player-route.js";
 import cardRoutes from "./routes/card-route.js";
 import scoreRoutes from "./routes/score-route.js";
 import unoGameRoutes from "./routes/uno-game-route.js";
+import authRoutes from "./routes/auth-route.js";
 
 const app = express();
 const server = createServer(app);
@@ -15,6 +15,7 @@ const server = createServer(app);
 app.use(express.json());
 
 // ROUTES
+app.use("/api/auth", authRoutes);
 app.use("/api/players", playerRoutes);
 app.use("/api/cards", cardRoutes);
 app.use("/api/scores", scoreRoutes);

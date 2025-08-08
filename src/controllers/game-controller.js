@@ -51,42 +51,6 @@ export const getGameById = async (req, res) => {
 };
 
 /**
- * Creates a new game.
- * @route POST /api/games
- * @param {Object} req - Express request object 
- * @param {Object} req.body - Request body data
- * @param {string} req.body.title - Game title (required)
- * @param {string} [req.body.status] - Game status (active/inactive, defaults to inactive)
- * @param {number} req.body.maxPlayers - Maximum number of players (required)
- * @param {Object} res - Express response object
- * @returns {Promise<void>}
- * @status 201 - Game created successfully
- * @status 400 - Missing required fields
- * @status 500 - Internal server error
- */
-export const createGame = async (req, res) => {
-  try {
-    const { title, status = 'inactive', maxPlayers } = req.body;
-    if (!title) {
-      return res.status(400).json({ error: "Game title is required" });
-    }
-    if (!maxPlayers) {
-      return res.status(400).json({ error: "maxPlayers is required" });
-    }
-
-    const newGame = await GameService.createGame({
-      title,
-      status,
-      maxPlayers,
-    });
-
-    res.status(201).json(newGame);
-  } catch (error) {
-    res.status(500).json({ error: "Error creating game" });
-  }
-};
-
-/**
  * Updates a complete game by its ID.
  * 
  * @route PUT /api/games/:id

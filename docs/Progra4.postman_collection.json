@@ -1,0 +1,1244 @@
+{
+	"info": {
+		"_postman_id": "f617ee31-98ea-4107-aad3-a28c6c3c4039",
+		"name": "Progra4",
+		"description": "Complete API collection for UNO card game backend. This collection includes all CRUD operations for games, players, cards, scores and UNO game sessions.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44698152",
+		"_collection_link": "https://enriquehernandez.postman.co/workspace/Enrique-Hernandez's-Workspace~28251f50-1fe2-4b27-8fff-dc0320d8cca3/collection/44698152-f617ee31-98ea-4107-aad3-a28c6c3c4039?action=share&source=collection_link&creator=44698152"
+	},
+	"item": [
+		{
+			"name": "Capstone",
+			"item": [
+				{
+					"name": "Players",
+					"item": [
+						{
+							"name": "Get All Players",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/players",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"players"
+									]
+								},
+								"description": "Retrieve all players registered in the system"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Player by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/players/{{player_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"players",
+										"{{player_id}}"
+									]
+								},
+								"description": "Get specific player details by ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Player",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Enrique Hernandez\",\n  \"email\": \"Enrique.Hernandez@jala.university\",\n  \"age\": \"19\",\n  \"password\": \"1234567\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/players",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"players"
+									]
+								},
+								"description": "Create a new player in the system"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Player (PUT)",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Enrique1\",\n  \"email\": \"enrique@example.com\",\n  \"age\": \"20\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/players/{{player_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"players",
+										"{{player_id}}"
+									]
+								},
+								"description": "Update complete player information"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Player",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/players/{{player_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"players",
+										"{{player_id}}"
+									]
+								},
+								"description": "Delete player from the system"
+							},
+							"response": []
+						}
+					],
+					"description": "Player management endpoints for registration, profile updates and deletion"
+				},
+				{
+					"name": "Games",
+					"item": [
+						{
+							"name": "Create Game",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Uno game\",\n  \"maxPlayers\": 4,\n  \"rules\": \"simple game\",\n  \"access_token\": \"{{access_token}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/games",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games"
+									]
+								},
+								"description": "Create a new game session"
+							},
+							"response": []
+						},
+						{
+							"name": "Join",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"access_token\": \"{{access_token}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/games/1/join",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"1",
+										"join"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Left",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"access_token\": \"{{access_token}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/games/1/leave",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"1",
+										"leave"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Start game",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"access_token\": \"{{access_token}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/games/1/start",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"1",
+										"start"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Status",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/games/1/status",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"1",
+										"status"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Players",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/games/1/players",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"1",
+										"players"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Current player",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/games/1/current-player",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"1",
+										"current-player"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Top card",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/games/1/top-card",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"1",
+										"top-card"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Scores",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/games/1/scores",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"1",
+										"scores"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Finish game",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"access_token\": \"{{access_token}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/games/1/finish",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"1",
+										"finish"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Games",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/games",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games"
+									]
+								},
+								"description": "Retrieve all games in the system"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Game by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/games/{{game_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"{{game_id}}"
+									]
+								},
+								"description": "Get specific game details by ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Game (PUT)",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Updated Game Name\",\n  \"status\": \"active\",\n  \"maxPlayers\": 6\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/games/{{game_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"{{game_id}}"
+									]
+								},
+								"description": "Update complete game information"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Game",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/games/{{game_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"{{game_id}}"
+									]
+								},
+								"description": "Delete game from the system"
+							},
+							"response": []
+						}
+					],
+					"description": "Game management endpoints for creating, updating and managing game sessions"
+				},
+				{
+					"name": "Cards",
+					"item": [
+						{
+							"name": "Get All Cards",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/cards",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"cards"
+									]
+								},
+								"description": "Retrieve all cards in the system"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Card by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/cards/{{card_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"cards",
+										"{{card_id}}"
+									]
+								},
+								"description": "Get specific card details by ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Card",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"color\": \"red\",\n  \"type\": \"number\",\n  \"value\": \"5\",\n  \"gameId\": 1\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/cards",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"cards"
+									]
+								},
+								"description": "Create a new card"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Card (PUT)",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"color\": \"blue\",\n  \"type\": \"action\",\n  \"value\": \"skip\",\n  \"gameId\": 1\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/cards/{{card_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"cards",
+										"{{card_id}}"
+									]
+								},
+								"description": "Update complete card information"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Card (PATCH)",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"color\": \"green\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/cards/{{card_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"cards",
+										"{{card_id}}"
+									]
+								},
+								"description": "Partially update card information"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Card",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/cards/{{card_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"cards",
+										"{{card_id}}"
+									]
+								},
+								"description": "Delete card from the system"
+							},
+							"response": []
+						},
+						{
+							"name": "Initialize UNO Deck",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"gameId\": 1\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/cards/initialize",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"cards",
+										"initialize"
+									]
+								},
+								"description": "Initialize a complete UNO deck for a game"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Shuffled Deck",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/cards/deck/{{game_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"cards",
+										"deck",
+										"{{game_id}}"
+									]
+								},
+								"description": "Get shuffled deck for a specific game"
+							},
+							"response": []
+						}
+					],
+					"description": "Card management endpoints for UNO game cards and deck operations"
+				},
+				{
+					"name": "Scores",
+					"item": [
+						{
+							"name": "Get All Scores",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/scores",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"scores"
+									]
+								},
+								"description": "Retrieve all scores in the system"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Score by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/scores/{{score_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"scores",
+										"{{score_id}}"
+									]
+								},
+								"description": "Get specific score details by ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Score",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"playerId\": 1,\n  \"gameId\": 1,\n  \"score\": 150,\n  \"position\": 1\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/scores",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"scores"
+									]
+								},
+								"description": "Create a new score record"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Score (PUT)",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"playerId\": 1,\n  \"gameId\": 1,\n  \"score\": 200,\n  \"position\": 2\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/scores/{{score_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"scores",
+										"{{score_id}}"
+									]
+								},
+								"description": "Update complete score information"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Score (PATCH)",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"score\": 175\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/scores/{{score_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"scores",
+										"{{score_id}}"
+									]
+								},
+								"description": "Partially update score information"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Score",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/scores/{{score_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"scores",
+										"{{score_id}}"
+									]
+								},
+								"description": "Delete score from the system"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Global Rankings",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/scores/rankings/global",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"scores",
+										"rankings",
+										"global"
+									]
+								},
+								"description": "Get global player rankings across all games"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Game Rankings",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/scores/rankings/game/{{game_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"scores",
+										"rankings",
+										"game",
+										"{{game_id}}"
+									]
+								},
+								"description": "Get rankings for a specific game"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Player Statistics",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/scores/stats/player/{{player_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"scores",
+										"stats",
+										"player",
+										"{{player_id}}"
+									]
+								},
+								"description": "Get statistics for a specific player"
+							},
+							"response": []
+						}
+					],
+					"description": "Score and ranking management endpoints for game results and player statistics"
+				},
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Login successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    ",
+											"    if (jsonData.token) {",
+											"        pm.environment.set(\"access_token\", jsonData.token);",
+											"        console.log(\"Token saved:\", jsonData.token);",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"Enrique.Hernandez@jala.university\",\n    \"password\": \"1234567\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logout",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Login successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    ",
+											"    if (jsonData.token) {",
+											"        pm.environment.set(\"access_token\", jsonData.token);",
+											"        console.log(\"Token saved:\", jsonData.token);",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"access_token\": \"{{access_token}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/logout",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getUser",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"access_token\": \"{{access_token}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/user",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"user"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Pre-request script to set up common variables",
+					"// This script runs before each request in the collection",
+					"",
+					"// Set base URL if not already set",
+					"if (!pm.environment.get('base_url')) {",
+					"    pm.environment.set('base_url', 'http://localhost:3000');",
+					"}",
+					"",
+					"// Log request details for debugging",
+					"console.log('Making request to:', pm.request.url.toString());",
+					"console.log('Method:', pm.request.method);",
+					"",
+					"// Add timestamp to environment for tracking",
+					"pm.environment.set('request_timestamp', new Date().toISOString());"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Common test script that runs after each request",
+					"",
+					"// Test that response time is acceptable",
+					"pm.test('Response time is less than 2000ms', function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+					"});",
+					"",
+					"// Test that response has correct Content-Type",
+					"pm.test('Response has correct Content-Type', function () {",
+					"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+					"});",
+					"",
+					"// Test for successful responses (2xx status codes)",
+					"pm.test('Status code is successful', function () {",
+					"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202, 204]);",
+					"});",
+					"",
+					"// Extract and save common IDs from responses for use in other requests",
+					"if (pm.response.code === 200 || pm.response.code === 201) {",
+					"    try {",
+					"        const jsonData = pm.response.json();",
+					"        ",
+					"        // Save player ID if present",
+					"        if (jsonData.id && pm.request.url.path.includes('players')) {",
+					"            pm.environment.set('player_id', jsonData.id);",
+					"        }",
+					"        ",
+					"        // Save game ID if present",
+					"        if (jsonData.id && pm.request.url.path.includes('games')) {",
+					"            pm.environment.set('game_id', jsonData.id);",
+					"        }",
+					"        ",
+					"        // Save card ID if present",
+					"        if (jsonData.id && pm.request.url.path.includes('cards')) {",
+					"            pm.environment.set('card_id', jsonData.id);",
+					"        }",
+					"        ",
+					"        // Save score ID if present",
+					"        if (jsonData.id && pm.request.url.path.includes('scores')) {",
+					"            pm.environment.set('score_id', jsonData.id);",
+					"        }",
+					"        ",
+					"        // Save UNO game ID if present",
+					"        if (jsonData.id && pm.request.url.path.includes('uno-games')) {",
+					"            pm.environment.set('uno_game_id', jsonData.id);",
+					"        }",
+					"    } catch (e) {",
+					"        console.log('Could not parse response as JSON');",
+					"    }",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "player_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "game_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "card_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "score_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "uno_game_id",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}

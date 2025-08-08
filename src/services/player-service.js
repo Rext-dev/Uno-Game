@@ -7,6 +7,7 @@ import Player from "../models/player-model.js";
  * @param {string} playerData.name - The player's name
  * @param {number} playerData.age - The player's age
  * @param {string} playerData.email - The player's email address
+ * @param {string} playerData.password - The player's password
  * @returns {Promise<Player>} - The created player
  */
 export const createPlayer = async (playerData) => {
@@ -16,10 +17,13 @@ export const createPlayer = async (playerData) => {
 /**
  * Retrieves all players from the database.
  * @async
+ * @param {Object} [options] - Optional query options
  * @returns {Promise<Player[]>} - A list of all players
  */
-export const getAllPlayers = async () => {
-  return await Player.findAll();
+export const getAllPlayers = async (options) => {
+  options = options || {};
+  options.attributes = { exclude: ['password'] };
+  return await Player.findAll(options);
 };
 
 /**
@@ -37,9 +41,10 @@ export const getPlayerById = async (id) => {
  * @async
  * @param {number} id - The ID of the player to update
  * @param {Object} playerData - The new data for the player
- * @param {string} playerData.name - The player's name
- * @param {number} playerData.age - The player's age
- * @param {string} playerData.email - The player's email address
+ * @param {string} [playerData.name] - The player's name
+ * @param {number} [playerData.age] - The player's age
+ * @param {string} [playerData.email] - The player's email address
+ * @param {string} [playerData.password] - The player's password
  * @returns {Promise<Player|null>} - The updated player, or null if not found
  */
 export const updatePlayer = async (id, playerData) => {
