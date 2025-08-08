@@ -1,5 +1,5 @@
 import * as ScoreService from "../services/score-service.js";
-// TODO usar @status en la docs
+
 /**
  * @async
  * @param {Object} req - Express request object
@@ -12,7 +12,6 @@ import * as ScoreService from "../services/score-service.js";
 export const createScore = async (req, res) => {
   try {
     const { score, playerId, gameId } = req.body;
-    // TODO: validar que player y game existan
     const newScoreRecord = await ScoreService.createScore({
       score,
       playerId,
@@ -30,7 +29,6 @@ export const createScore = async (req, res) => {
  * @param {Object} req - Express request object
  * @param {string} req.params.id - The ID of the score to get
  * @param {Object} res - Express response object
- * @returns {Promise<void>}
  *
  */
 export const getScoreById = async (req, res) => {
@@ -98,4 +96,3 @@ export const deleteScore = async (req, res) => {
     res.status(500).json({ error: "Error deleting score" });
   }
 };
-

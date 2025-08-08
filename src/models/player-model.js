@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database-config.js";
+import bcrypt from "bcrypt";
 
 const Player = sequelize.define("Player", {
   id: {
@@ -31,6 +32,36 @@ const Player = sequelize.define("Player", {
       notEmpty: true,
     },
   },
-  
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      len: [6, 100],
+    },
+  },
+}, {
+  hooks: {
+    beforeCreate: async (player) => {
+      try {
+        if (player.password) {
+          const saltRounds = 10;
+          player.password = await bcrypt.hash(player.password, saltRounds);
+        }
+      } catch (error) {
+        throw new Error("Error hashing password: " + error.message);
+      }
+    }
+  }
 });
+
+/**
+ * Compare plain password with hashed password
+ * @param {string} plainPassword
+ * @returns {Promise<boolean>}
+ */
+Player.prototype.comparePassword = async function(plainPassword) {
+  return await bcrypt.compare(plainPassword, this.password);
+};
+
 export default Player;

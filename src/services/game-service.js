@@ -6,6 +6,7 @@ import Games from "../models/games-model.js";
  * @param {string} gameData.title - Game title
  * @param {string} gameData.status - Game status
  * @param {number} gameData.maxPlayers - Maximum number of players
+ * @param {string} gameData.rules - Game rules
  * @returns {Promise<Games>} The created game
  */
 export const createGame = async (gameData) => {
@@ -47,6 +48,7 @@ export const getGameById = async (id) => {
  * @param {string} [gameData.title] - Game title
  * @param {string} [gameData.status] - Game status
  * @param {number} [gameData.maxPlayers] - Maximum number of players
+ * @param {string} [gameData.rules] - Game rules
  * @returns {Promise<Games|null>} The updated game or null if not found
  */
 export const updateGame = async (id, gameData) => {

@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database-config.js";
-
+import { GAME_STATUS } from "../config/game-constants.js";
 const Games = sequelize.define(
   "Games",
   {
@@ -22,7 +22,7 @@ const Games = sequelize.define(
       allowNull: false,
       validate: {
         notEmpty: true,
-        isIn: ["inactive", "active"],
+        isIn: [Object.values(GAME_STATUS)],
       },
     },
     maxPlayers: {
@@ -33,6 +33,13 @@ const Games = sequelize.define(
         min: 1,
       },
     },
+    rules: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    }
   },
   {
     tableName: "Games",

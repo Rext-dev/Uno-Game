@@ -14,6 +14,7 @@ export const getAllPlayers = async (req, res) => {
     const players = await PlayerService.getAllPlayers();
     res.status(200).json(players);
   } catch (error) {
+    console.error("Error fetching players:", error);
     res.status(500).json({ error: "Error fetching players" });
   }
 };
@@ -36,7 +37,9 @@ export const getPlayerById = async (req, res) => {
     if (!player) {
       return res.status(404).json({ error: "Player not found" });
     }
-    res.status(200).json(player);
+
+    const {password, ...playerWithoutPassword} = player.toJSON();
+    res.status(200).json(playerWithoutPassword);
   } catch (error) {
     res.status(500).json({ error: "Error fetching player" });
   }
@@ -52,19 +55,25 @@ export const getPlayerById = async (req, res) => {
  * @param {string} req.body.name - Player name
  * @param {number} req.body.age - Player age
  * @param {string} req.body.email - Player email
+ * @param {string} req.body.password - Player password
  * @param {Object} res - Express response object
  * @returns {Promise<void>}
  */
 export const createPlayer = async (req, res) => {
   try {
-    const { name, age, email } = req.body;
-    //TODO: manejar error, cuando se crea un nuevo jugador con el mismo email, devolver 409
+    const { name, age, email, password } = req.body;
+    const existingPlayer = await PlayerService.getAllPlayers({ where: { email } });
+    if (existingPlayer.length > 0) {
+      return res.status(409).json({ error: "Player with this email already exists" });
+    }
     const newPlayer = await PlayerService.createPlayer({
       name,
       age,
       email,
+      password,
     });
-    res.status(201).json(newPlayer);
+    const { password: _, ...playerWithoutPassword } = newPlayer.toJSON();
+    res.status(201).json(playerWithoutPassword);
   } catch (error) {
     console.error("Error creating player:", error);
     res.status(500).json({ error: "Error creating the player" });
@@ -78,21 +87,25 @@ export const createPlayer = async (req, res) => {
  * @param {Object} req - Express request object
  * @param {string} req.params.id - The ID of the player to update
  * @param {Object} req.body - Request body data
- * @param {string} req.body.name - Player name
- * @param {number} req.body.age - Player age
- * @param {string} req.body.email - Player email
+ * @param {string} [req.body.name] - Player name
+ * @param {number} [req.body.age] - Player age
+ * @param {string} [req.body.email] - Player email
+ * @param {string} [req.body.password] - Player password
  * @param {Object} res - Express response object
  * @returns {Promise<void>}
  */
 export const updatePlayer = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, age, email } = req.body;
-    const playerUpdated = await PlayerService.updatePlayer(id, {
-      name,
-      age,
-      email,
-    });
+    // TODO: require old password is needed?
+    const updateFields = {};
+    if (req.body.name) updateFields.name = req.body.name;
+    if (req.body.age) updateFields.age = req.body.age;
+    if (req.body.email) updateFields.email = req.body.email;
+    if (req.body.password) updateFields.password = req.body.password;
+
+    const playerUpdated = await PlayerService.updatePlayer(id, updateFields);
+
     if (!playerUpdated) {
       return res.status(404).json({ error: "Player not found" });
     }
