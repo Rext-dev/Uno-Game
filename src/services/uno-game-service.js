@@ -23,6 +23,7 @@ export const createGame = async (gameData, creatorId) => {
     status: GAME_STATUS.INACTIVE,
     maxPlayers,
     rules,
+  creatorId,
   });
   await GamePlayers.create({
     gameId: game.id,

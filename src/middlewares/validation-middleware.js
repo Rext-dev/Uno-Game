@@ -43,7 +43,7 @@ export const validateBody = (schema) => {
  */
 export const validateParams = (schema) => {
   return (req, res, next) => {
-    const { error, value } = schema.validate(req.params,{
+  const { error, value } = schema.validate(req.params, {
       convert: true,
     });
     if (error) {
