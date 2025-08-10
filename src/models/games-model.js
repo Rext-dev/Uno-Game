@@ -39,6 +39,14 @@ const Games = sequelize.define(
       validate: {
         notEmpty: true,
       },
+    },
+    creatorId: {
+      type: DataTypes.INTEGER,
+  allowNull: true,
+      references: {
+        model: 'Players',
+        key: 'id'
+      }
     }
   },
   {

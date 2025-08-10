@@ -2,16 +2,21 @@ import { Sequelize } from "sequelize";
 import { config } from "dotenv";
 config();
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME || "default_db",
-  process.env.DB_USER || "default_user",
-  process.env.DB_PASSWORD || "default_password",
-  {
-    host: process.env.DB_HOST || "localhost",
-    dialect: process.env.DB_DIALECT || "mysql",
-    port: process.env.DB_PORT || 3306,
-  }
-);
+const isTest = process.env.NODE_ENV === 'test';
+
+const sequelize = isTest
+  ? new Sequelize('sqlite::memory:', { logging: false })
+  : new Sequelize(
+      process.env.DB_NAME || "default_db",
+      process.env.DB_USER || "default_user",
+      process.env.DB_PASSWORD || "default_password",
+      {
+        host: process.env.DB_HOST || "localhost",
+        dialect: process.env.DB_DIALECT || "mysql",
+        port: process.env.DB_PORT || 3306,
+        logging: false,
+      }
+    );
 
 async function connectDB() {
   try {
