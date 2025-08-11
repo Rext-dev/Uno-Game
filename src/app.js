@@ -27,7 +27,7 @@ app.use(errorHandler);
 async function startServer() {
   try {
     await connectDB();
-    await sequelize.sync({ force: false }); // True para reiniciar y aplicar los cambios a la bd, solo lo habilito mientras lo desarrollo y haga cambios en los modelos.
+    await sequelize.sync({ force: true }); // True para reiniciar y aplicar los cambios a la bd, solo lo habilito mientras lo desarrollo y haga cambios en los modelos.
     const PORT = process.env.PORT || 3000;
     server.listen(PORT, () => {
       console.log(`Server listening on port ${PORT}`);

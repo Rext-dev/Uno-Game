@@ -92,7 +92,9 @@ export const leaveGame = async (req, res) => {
 export const startGame = async (req, res) => {
   try {
     const gameId = req.params.id;
-    const gameData = await UnoGameService.startGame(gameId);
+    const creatorId = req.user.id;
+
+    const gameData = await UnoGameService.startGame(gameId, creatorId);
 
     res.status(200).json({
       success: true,
