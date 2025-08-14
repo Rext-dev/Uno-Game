@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { validateWithJoi } from "../utils/fp.js";
 /**
  * Compare body with a Model
  * @param {Joi.Schema} schema - Model to compare with body
@@ -13,25 +14,24 @@ export const validateBody = (schema) => {
         errors: [],
       });
     }
-    const { error, value } = schema.validate(req.body, {
+    const result = validateWithJoi(schema, req.body, {
       abortEarly: false,
       stripUnknown: true,
     });
 
-    if (error) {
-      const errors = error.details.map((detail) => ({
-        field: detail.path.join("."),
-        message: detail.message,
-        value: detail.context?.value,
-      }));
+    const response = result.fold(
+      (errors) => ({ ok: false, errors }),
+      (value) => ({ ok: true, value })
+    );
 
+    if (!response.ok) {
       return res.status(400).json({
         success: false,
         message: "The body is not valid",
-        errors,
+        errors: response.errors,
       });
     }
-    req.body = value;
+    req.body = response.value;
     next();
   };
 };
@@ -43,21 +43,19 @@ export const validateBody = (schema) => {
  */
 export const validateParams = (schema) => {
   return (req, res, next) => {
-  const { error, value } = schema.validate(req.params, {
-      convert: true,
+  const result = validateWithJoi(schema, req.params, { convert: true });
+  const response = result.fold(
+    (errors) => ({ ok: false, errors }),
+    (value) => ({ ok: true, value })
+  );
+  if (!response.ok) {
+    return res.status(400).json({
+      success: false,
+      message: "The params are not valid",
+      errors: response.errors,
     });
-    if (error) {
-      return res.status(400).json({
-        success: false,
-        message: "The params are not valid",
-        errors: error.details.map((detail) => ({
-          field: detail.path.join("."),
-          message: detail.message,
-          value: detail.context?.value,
-        })),
-      });
-    }
-    req.params = value;
+  }
+    req.params = response.value;
     next();
   };
 };
