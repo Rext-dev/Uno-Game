@@ -2,11 +2,11 @@ import * as PlayerService from "../services/player-service.js";
 
 /**
  * Get all players.
- * 
+ *
  * @async
  * @function getAllPlayers
  * @param {Object} req - Express request object
- * @param {Object} res - Express response object  
+ * @param {Object} res - Express response object
  * @returns {Promise<void>}
  */
 export const getAllPlayers = async (req, res) => {
@@ -21,7 +21,7 @@ export const getAllPlayers = async (req, res) => {
 
 /**
  * Get a player by ID.
- * 
+ *
  * @async
  * @function getPlayerById
  * @param {Object} req - Express request object
@@ -38,7 +38,7 @@ export const getPlayerById = async (req, res) => {
       return res.status(404).json({ error: "Player not found" });
     }
 
-    const {password, ...playerWithoutPassword} = player.toJSON();
+    const { password, ...playerWithoutPassword } = player.toJSON();
     res.status(200).json(playerWithoutPassword);
   } catch (error) {
     res.status(500).json({ error: "Error fetching player" });
@@ -47,7 +47,7 @@ export const getPlayerById = async (req, res) => {
 
 /**
  * Create a new player.
- * 
+ *
  * @async
  * @function createPlayer
  * @param {Object} req - Express request object
@@ -62,9 +62,13 @@ export const getPlayerById = async (req, res) => {
 export const createPlayer = async (req, res) => {
   try {
     const { name, age, email, password } = req.body;
-    const existingPlayer = await PlayerService.getAllPlayers({ where: { email } });
+    const existingPlayer = await PlayerService.getAllPlayers({
+      where: { email },
+    });
     if (existingPlayer.length > 0) {
-      return res.status(409).json({ error: "Player with this email already exists" });
+      return res
+        .status(409)
+        .json({ error: "Player with this email already exists" });
     }
     const newPlayer = await PlayerService.createPlayer({
       name,
@@ -117,7 +121,7 @@ export const updatePlayer = async (req, res) => {
 
 /**
  * Delete a player by ID
- * 
+ *
  * @async
  * @function deletePlayer
  * @param {Object} req - Express request object
@@ -136,4 +140,4 @@ export const deletePlayer = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Error deleting the player" });
   }
-}; 
+};
