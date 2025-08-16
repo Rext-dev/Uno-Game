@@ -1,4 +1,11 @@
 import Player from "../models/player-model.js";
+import { SequelizePlayerRepository } from "../infrastructure/repositories/sequelize-player-repository.js";
+
+let repository = new SequelizePlayerRepository();
+
+export const setPlayerRepository = (repo) => {
+  repository = repo;
+};
 
 /**
  * Creates a new player in the database.
@@ -11,7 +18,7 @@ import Player from "../models/player-model.js";
  * @returns {Promise<Player>} - The created player
  */
 export const createPlayer = async (playerData) => {
-  return await Player.create(playerData);
+  return await repository.create(playerData);
 };
 
 /**
@@ -21,9 +28,7 @@ export const createPlayer = async (playerData) => {
  * @returns {Promise<Player[]>} - A list of all players
  */
 export const getAllPlayers = async (options) => {
-  options = options || {};
-  options.attributes = { exclude: ['password'] };
-  return await Player.findAll(options);
+  return await repository.findAll(options);
 };
 
 /**
@@ -33,7 +38,7 @@ export const getAllPlayers = async (options) => {
  * @returns {Promise<Player|null>} - The player with the specified ID, or null if not found
  */
 export const getPlayerById = async (id) => {
-  return await Player.findByPk(id);
+  return await repository.findById(id);
 };
 
 /**
@@ -48,12 +53,7 @@ export const getPlayerById = async (id) => {
  * @returns {Promise<Player|null>} - The updated player, or null if not found
  */
 export const updatePlayer = async (id, playerData) => {
-  const player = await Player.findByPk(id);
-  if (!player) {
-    return null;
-  }
-  await player.update(playerData);
-  return player;
+  return await repository.update(id, playerData);
 };
 
 /**
@@ -63,10 +63,5 @@ export const updatePlayer = async (id, playerData) => {
  * @returns {Promise<boolean>} - True if the player was deleted, false if not found
  */
 export const deletePlayer = async (id) => {
-  const player = await Player.findByPk(id);
-  if (!player) {
-    return false;
-  }
-  await player.destroy();
-  return true;
+  return await repository.delete(id);
 };

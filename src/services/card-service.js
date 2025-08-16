@@ -5,17 +5,17 @@ import Card from "../models/card-model.js";
  * Creates a new card
  * @async
  * @param {Object} cardData - The data for the card
- * @param {string} cardData.color - Card color 
- * @param {string} cardData.value - Card value 
+ * @param {string} cardData.color - Card color
+ * @param {string} cardData.value - Card value
  * @param {number} cardData.gameId - The ID of the game this card belongs to
  * @returns {Promise<Card>} The created card
  */
 export const createCard = async (cardData) => {
-  return await Card.create(cardData);
+  return await Card.create(cardData); // LSP: seguiría misma firma si se sustituye por repositorio.
 };
 
 /**
- * Get all cards 
+ * Get all cards
  * @async
  * @param {number} gameId - game ID to filter cards
  * @returns {Promise<Card[]>} List of cards for specific game
@@ -70,7 +70,7 @@ export const deleteCard = async (id) => {
 /**
  * Initialize a complete UNO deck for a game.
  * Creates all 108 cards that come in a standard UNO deck.
- * 
+ *
  * @async
  * @param {number} gameId - The ID of the game to create deck for
  * @returns {Promise<Card[]>} Array of all created cards
@@ -79,8 +79,8 @@ export const initializeDeck = async (gameId) => {
   const deck = [];
 
   // Normal colors
-  const colors = ['red', 'blue', 'green', 'yellow'];
-  
+  const colors = ["red", "blue", "green", "yellow"];
+
   /**
    * Create this cards
    * For every color:
@@ -103,38 +103,38 @@ export const initializeDeck = async (gameId) => {
    */
   for (const color of colors) {
     // Generate the 0 card
-    deck.push({ color, value: '0', gameId });
+    deck.push({ color, value: "0", gameId });
 
     // Generate cards 1-9: two of every number per color
     for (let num = 1; num <= 9; num++) {
       deck.push({ color, value: num.toString(), gameId });
       deck.push({ color, value: num.toString(), gameId });
     }
-    
+
     // generate special cards
-    const specialCards = ['Skip', 'Reverse', 'Draw Two'];
+    const specialCards = ["Skip", "Reverse", "Draw Two"];
     for (const special of specialCards) {
       deck.push({ color, value: special, gameId });
       deck.push({ color, value: special, gameId });
     }
   }
-  
+
   // generate 4 cards for every special cards
   for (let i = 0; i < 4; i++) {
-    deck.push({ color: 'black', value: 'Wild', gameId });
-    deck.push({ color: 'black', value: 'Wild Draw Four', gameId });
+    deck.push({ color: "black", value: "Wild", gameId });
+    deck.push({ color: "black", value: "Wild Draw Four", gameId });
   }
-  
+
   // Push to the database
   const createdCards = await Card.bulkCreate(deck);
-  
+
   // TODO:  es necesario barajarlo aqui?
   return shuffleCards(createdCards);
 };
 
 /**
  * Shuffle an array of cards.
- * 
+ *
  * @param {Array} cards - Array of cards to shuffle
  * @returns {Array} Shuffled array of cards
  */
@@ -142,17 +142,17 @@ export const shuffleCards = (cards) => {
   const shuffled = [...cards]; // inmutabilidad
   for (let i = shuffled.length - 1; i > 0; i--) {
     const randomIndex = Math.floor(Math.random() * (i + 1));
-    
+
     // Shuffle positions
     [shuffled[i], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[i]];
   }
-  
+
   return shuffled;
 };
 
 /**
  * Get cards shuffled for a specific game
- * 
+ *
  * @async
  * @param {number} gameId - The ID of the game
  * @returns {Promise<Card[]>} Shuffled deck of cards for the game

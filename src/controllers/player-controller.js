@@ -1,5 +1,11 @@
 import * as PlayerService from "../services/player-service.js";
 
+const toSafePlayer = (playerInstance) => {
+  if (!playerInstance) return null;
+  const { password, ...safe } = playerInstance.toJSON();
+  return safe;
+};
+
 /**
  * Get all players.
  *
@@ -38,8 +44,7 @@ export const getPlayerById = async (req, res) => {
       return res.status(404).json({ error: "Player not found" });
     }
 
-    const { password, ...playerWithoutPassword } = player.toJSON();
-    res.status(200).json(playerWithoutPassword);
+    res.status(200).json(toSafePlayer(player));
   } catch (error) {
     res.status(500).json({ error: "Error fetching player" });
   }
@@ -61,7 +66,7 @@ export const getPlayerById = async (req, res) => {
  */
 export const createPlayer = async (req, res) => {
   try {
-    const { name, age, email, password } = req.body;
+    const { email } = req.body;
     const existingPlayer = await PlayerService.getAllPlayers({
       where: { email },
     });
@@ -70,14 +75,8 @@ export const createPlayer = async (req, res) => {
         .status(409)
         .json({ error: "Player with this email already exists" });
     }
-    const newPlayer = await PlayerService.createPlayer({
-      name,
-      age,
-      email,
-      password,
-    });
-    const { password: _, ...playerWithoutPassword } = newPlayer.toJSON();
-    res.status(201).json(playerWithoutPassword);
+    const newPlayer = await PlayerService.createPlayer(req.body);
+    res.status(201).json(toSafePlayer(newPlayer));
   } catch (error) {
     console.error("Error creating player:", error);
     res.status(500).json({ error: "Error creating the player" });
